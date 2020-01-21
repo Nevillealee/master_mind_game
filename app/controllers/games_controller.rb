@@ -4,8 +4,9 @@ class GamesController < ApplicationController
 
   def start
     @current_user = User.find(session[:current_user_id])
-    # num_combo = Resque.enqueue(NumberGenerator)
-    @msg =  NumberGenerator.perform()
+    # TODO(Nlee): perform asynchronously
+    num_combo =  NumberGenerator.perform()
+    @game = @current_user.games.create(number_combo: num_combo)
   end
 
 end

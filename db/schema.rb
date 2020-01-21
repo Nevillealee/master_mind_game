@@ -17,14 +17,12 @@ ActiveRecord::Schema.define(version: 2020_01_20_233224) do
 
   create_table "feedbacks", force: :cascade do |t|
     t.bigint "game_id"
-    t.bigint "user_id"
     t.integer "attempt"
     t.string "result"
     t.string "user_guess"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["game_id"], name: "index_feedbacks_on_game_id"
-    t.index ["user_id"], name: "index_feedbacks_on_user_id"
   end
 
   create_table "games", force: :cascade do |t|
@@ -41,7 +39,6 @@ ActiveRecord::Schema.define(version: 2020_01_20_233224) do
 
   create_table "users", force: :cascade do |t|
     t.string "name"
-    t.integer "feedbacks_count"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
