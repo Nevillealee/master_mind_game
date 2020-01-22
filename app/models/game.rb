@@ -3,6 +3,7 @@ class Game < ApplicationRecord
   belongs_to :user
 
   def compare_answer(guess)
+    puts "compare answer recieved: #{guess}"
     if guess == number_combo
       won = true
       return "You guessed the number!!!"
@@ -16,15 +17,15 @@ class Game < ApplicationRecord
   private
 
   def contains_num?(guess_num)
-    guess_num.each do |d|
+    guess_num.split('').each do |d|
       return true if number_combo.include?(d)
     end
     return false
   end
 
   def num_match_position?(guess_num)
-    guess_num.each_with_index do |d, index|
-      return true if num_combo[index] == d
+    guess_num.split('').each_with_index do |d, index|
+      return true if number_combo[index] == d
     end
     return false
   end

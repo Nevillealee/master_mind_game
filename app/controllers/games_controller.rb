@@ -18,22 +18,26 @@ class GamesController < ApplicationController
   def update
     # while attempts remaining and game isnt won
     @current_game = Game.find(params[:id])
-    if @current_game.attempts_remaining > 0 && @current_game.won == false
-      remaining = @current_game.attempts_remaining - 1
-      @current_game.attempts_remaining = remaining
-      @current_game.save!
-      guess = params[:user_guess]
-      result = @current_game.compare_answer(guess)
-      attempt = 10 - @current_game.attempts_remaining
-      # put feedback.result (derived from game.compare_answer response) in flash
-      @feedback = @current_game.feedbacks.create(user_guess: guess, attempt: attempt, result: result)
-      if @current_game.won
-        # redirect to win screen and reveal number_combo
-      else
-        redirect_to @current_game
-      end
-    elsif @current_game.attempts_remaining < 1
+    remaining = @current_game.attempts_remaining - 1
+    @current_game.attempts_remaining = remaining
+    @current_game.save!
+
+    guess = game_params[:user_guess]
+    @result = @current_game.compare_answer(guess)
+    attempt = 10 - @current_game.attempts_remaining
+    # put feedback.result (derived from game.compare_answer response) in flash
+    @feedback = @current_game.feedbacks.create(user_guess: guess, attempt: attempt, result: @result)
+    flash[:notice] = @result
+
+    if @current_game.won
+      # redirect to win screen and reveal number_combo
+      redirect_to root_path
+    elsif @current_game.attempts_remaining > 0 && @current_game.won == false
+      redirect_to @current_game
+    else
       # redirect to game over screen
+      flash[:alert] = "GAME OVER...Please try again"
+      redirect_to root_path
     end
   end
 
