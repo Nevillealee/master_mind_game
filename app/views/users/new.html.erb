@@ -1,18 +1,19 @@
-
 <div class='container-fluid'>
-  <%= form_with model: @user, class: 'col-lg-3' do |f| %>
-    <% if @user.errors.any? %>
-      <h2><%= pluralize(@user.errors.count, "error") %> prohibited this Resource from being saved:</h2>
-      <ul>
-      <% @user.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
+  <div class='col-lg-3'>
+    <%= form_with model: @user, :html => {:autocomplete => "off"} do |f| %>
+      <% if @user.errors.any? %>
+        <h2><%= pluralize(@user.errors.count, "error") %> prohibited this Resource from being saved:</h2>
+        <ul>
+        <% @user.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+        </ul>
       <% end %>
-      </ul>
+      <div class='form-group'>
+        <h3>Enter name:</h3>
+        <%= f.text_field :name, placeholder: 'Izuku Midoriya', class: 'form-control', required: true %>
+      </div>
+        <%= f.submit "START", class: "btn btn-success" %>
     <% end %>
-    <div class='form-group'>
-      <%= f.label :name, 'Enter name' %>
-      <%= f.text_field :name, placeholder: 'Izuku Midoriya', class: 'form-control', required: true %>
-    </div>
-      <%= f.submit "START", class: "btn btn-success" %>
-  <% end %>
+  </div>
 </div>

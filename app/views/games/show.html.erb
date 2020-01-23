@@ -1,19 +1,45 @@
-<h1>Attempts remaining: <%= @attempts_remaining %> </h1>
-
-<div class='container-fluid'>
-  <%= form_with model: @current_game, class: 'col-lg-3' do |f| %>
-    <% if @current_game.errors.any? %>
-      <h2><%= pluralize(@current_game.errors.count, "error") %> prohibited this Resource from being saved:</h2>
-      <ul>
-      <% @current_game.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
+<div class="container-fluid">
+  <div class='col-lg-3'>
+    <h3>Attempts remaining: <%= @attempts_remaining %> </h3>
+    <%= form_with model: @current_game , :html => {:autocomplete => "off"}  do |f| %>
+      <% if @current_game.errors.any? %>
+        <h2><%= pluralize(@current_game.errors.count, "error") %> prohibited this Resource from being saved:</h2>
+        <ul>
+        <% @current_game.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+        </ul>
       <% end %>
-      </ul>
+
+      <div class='form-group'>
+        <%= f.label :user_guess, "Enter a #{@current_game.number_combo.size} digit number:" %>
+        <%= f.text_field :user_guess, placeholder: '123...', class: 'form-control', required: true %>
+      </div>
+        <%= f.submit "GUESS!", class: "btn btn-success" %>
     <% end %>
-    <div class='form-group'>
-      <%= f.label :user_guess, 'Enter number' %>
-      <%= f.text_field :user_guess, placeholder: '1234', class: 'form-control', required: true %>
-    </div>
-      <%= f.submit "GUESS!", class: "btn btn-success" %>
-  <% end %>
+  </div>
+  <br>
+  <br>
+  <div class="col-4">
+    <h3>History</h3>
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th scope="col">Attempt</th>
+          <th scope="col">Guess</th>
+          <th scope="col">Result</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <% @all_feedback.each do |feedback| %>
+          <tr>
+            <th scope="row"><%= feedback.attempt %></th>
+            <td><%= feedback.user_guess %></td>
+            <td><%= feedback.result %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
 </div>

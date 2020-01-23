@@ -13,6 +13,7 @@ class GamesController < ApplicationController
   def show
     @current_game = Game.find(params[:id])
     @attempts_remaining = @current_game.attempts_remaining
+    @all_feedback = @current_game.feedbacks.all
   end
 
   def update
@@ -27,12 +28,13 @@ class GamesController < ApplicationController
     attempt = 10 - @current_game.attempts_remaining
     # put feedback.result (derived from game.compare_answer response) in flash
     @feedback = @current_game.feedbacks.create(user_guess: guess, attempt: attempt, result: @result)
-    flash[:notice] = @result
 
     if @current_game.won
+      flash[:notice] = @result
       # redirect to win screen and reveal number_combo
       redirect_to root_path
     elsif @current_game.attempts_remaining > 0 && @current_game.won == false
+      flash[:notice] = @result
       redirect_to @current_game
     else
       # redirect to game over screen

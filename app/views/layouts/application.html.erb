@@ -12,9 +12,7 @@
   <body>
     <% if notice.present? %>
       <p class="alert alert-primary"><%= flash.now[:notice] %></p>
-    <% end %>
-
-    <% if alert.present? %>
+    <% elsif alert.present? %>
       <p class="alert alert-danger"><%= flash.now[:alert] %></p>
     <% end %>
     <%= yield %>

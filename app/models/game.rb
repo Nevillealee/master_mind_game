@@ -5,12 +5,14 @@ class Game < ApplicationRecord
   def compare_answer(guess)
     puts "compare answer recieved: #{guess}"
     if guess == number_combo
-      won = true
-      return "You guessed the number!!!"
+      self.won = true
+      return "YOU WON, the number was #{number_combo}!"
     elsif num_match_position?(guess)
       return "You guessed a correct digit and its correct location!"
     elsif contains_num?(guess)
       return "You guessed a correct digit"
+    else
+      return "Try again"
     end
   end
 
