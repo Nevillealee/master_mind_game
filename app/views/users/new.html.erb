@@ -1,19 +1,28 @@
+<%= link_to 'Exit', root_path, class: "btn btn-danger", id: "exit-btn" %>
 <div class='container-fluid'>
-  <div class='col-lg-3'>
-    <%= form_with model: @user, :html => {:autocomplete => "off"} do |f| %>
-      <% if @user.errors.any? %>
-        <h2><%= pluralize(@user.errors.count, "error") %> prohibited this Resource from being saved:</h2>
-        <ul>
-        <% @user.errors.full_messages.each do |message| %>
-          <li><%= message %></li>
+    <div class='col-lg-4 offset-lg-4 name-form'>
+      <%= form_with model: @user, :html => {:autocomplete => "off"} do |f| %>
+        <% if @user.errors.any? %>
+          <h2><%= pluralize(@user.errors.count, "error") %> prohibited this Resource from being saved:</h2>
+          <ul>
+          <% @user.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+          </ul>
         <% end %>
-        </ul>
+        <div class='form-group'>
+          <div class='form-row'>
+            <div class="col-md-9 mt-3">
+              <%= f.label :name, "Player name:" %>
+              <%= f.text_field :name, class: 'form-control', required: true %>
+            </div>
+            <div class="col-md-3 mt-3">
+              <%= f.label :difficulty, "Difficulty:" %>
+              <%= select_tag(:difficulty, options_for_select([['Easy', 4], ['Medium', 5], ['Hard', 6], ['Ludicrous', 7]]),  {:class => 'form-control'}) %>
+            </div>
+          </div>
+        </div>
+          <%= f.submit "START", class: "btn btn-success btn-block" %>
       <% end %>
-      <div class='form-group'>
-        <h3>Enter name:</h3>
-        <%= f.text_field :name, placeholder: 'Izuku Midoriya', class: 'form-control', required: true %>
-      </div>
-        <%= f.submit "START", class: "btn btn-success" %>
-    <% end %>
-  </div>
+    </div>
 </div>

@@ -5,6 +5,7 @@ class UsersController < ApplicationController
 
   def create
     @user = User.find_or_create_by(name: user_params['name'].strip)
+    session[:difficulty] = params['difficulty']
     if @user.save
       session[:current_user_id] = @user.id
       redirect_to controller: :games, action: :index

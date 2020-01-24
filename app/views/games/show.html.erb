@@ -1,45 +1,88 @@
 <div class="container-fluid">
-  <div class='col-lg-3'>
-    <h3>Attempts remaining: <%= @attempts_remaining %> </h3>
-    <%= form_with model: @current_game , :html => {:autocomplete => "off"}  do |f| %>
-      <% if @current_game.errors.any? %>
-        <h2><%= pluralize(@current_game.errors.count, "error") %> prohibited this Resource from being saved:</h2>
-        <ul>
-        <% @current_game.errors.full_messages.each do |message| %>
-          <li><%= message %></li>
+  <!-- User guess input -->
+  <div class="split left">
+    <div class='col-lg-8'>
+      <h3>Attempts remaining: <%= @attempts_remaining %> </h3>
+      <%= form_with model: @current_game , :html => {:autocomplete => "off"}  do |f| %>
+        <% if @current_game.errors.any? %>
+          <h2><%= pluralize(@current_game.errors.count, "error") %> prohibited this Resource from being saved:</h2>
+          <ul>
+          <% @current_game.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+          </ul>
         <% end %>
-        </ul>
+
+        <div class='form-group'>
+          <%= f.label :user_guess, "Enter a #{@current_game.number_combo.size} digit number:" %>
+          <%= f.text_field :user_guess, placeholder: '123...', class: 'form-control', required: true %>
+        </div>
+          <%= f.submit "GUESS", class: "btn btn-success col-md-3" %>
+          <!-- rules modal button -->
+          <button type="button" class="btn btn-outline-secondary" id="rules-btn" data-toggle="modal" data-target="#rulesModal">
+            See Rules
+          </button>
       <% end %>
-
-      <div class='form-group'>
-        <%= f.label :user_guess, "Enter a #{@current_game.number_combo.size} digit number:" %>
-        <%= f.text_field :user_guess, placeholder: '123...', class: 'form-control', required: true %>
-      </div>
-        <%= f.submit "GUESS!", class: "btn btn-success" %>
-    <% end %>
+    </div>
   </div>
-  <br>
-  <br>
-  <div class="col-4">
-    <h3>History</h3>
-    <table class="table table-bordered">
-      <thead>
-        <tr>
-          <th scope="col">Attempt</th>
-          <th scope="col">Guess</th>
-          <th scope="col">Result</th>
-        </tr>
-      </thead>
-
-      <tbody>
-        <% @all_feedback.each do |feedback| %>
+ <!-- Guess history table -->
+  <div class="split right">
+    <div class="col-lg-10">
+      <h3>Guess History</h3>
+      <table class="table table-bordered">
+        <thead>
           <tr>
-            <th scope="row"><%= feedback.attempt %></th>
-            <td><%= feedback.user_guess %></td>
-            <td><%= feedback.result %></td>
+            <th scope="col">Attempt</th>
+            <th scope="col">Guess</th>
+            <th scope="col">Result</th>
           </tr>
-        <% end %>
-      </tbody>
-    </table>
+        </thead>
+
+        <tbody>
+          <% @all_feedback.each do |feedback| %>
+            <tr>
+              <th scope="row"><%= feedback.attempt %></th>
+              <td><%= feedback.user_guess %></td>
+              <td><%= feedback.result %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+        <%= link_to 'Quit Game', root_path, class: "btn btn-danger", id: "quit-btn" %>
+    </div>
+  </div>
+</div>
+
+<!-- Rules Modal -->
+<div class="modal fade" id="rulesModal" tabindex="-1" role="dialog" aria-labelledby="rulesModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="rulesModalLabel">Master Mind Game Rules</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <ol>
+          <li>At the start of the game the computer will randomly select a pattern of n different
+             numbers from a total of 8 different numbers (0..7)
+           </li>
+           <br>
+          <li>Player has 10 attempts to guess the correct number combination</li>
+          <br>
+          <li>At the end of each guess, computer will provide one of the following responses:
+            <ul>
+              <li>A correct digit was guessed</li>
+              <li>A correct digit and its location was guessed</li>
+              <li>The guess was incorrect</li>
+            </ul>
+          </li>
+        </ol>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
   </div>
 </div>

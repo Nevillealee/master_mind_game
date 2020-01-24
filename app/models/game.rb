@@ -6,13 +6,14 @@ class Game < ApplicationRecord
     puts "compare answer recieved: #{guess}"
     if guess == number_combo
       self.won = true
+      self.save
       return "YOU WON, the number was #{number_combo}!"
     elsif num_match_position?(guess)
       return "You guessed a correct digit and its correct location!"
     elsif contains_num?(guess)
       return "You guessed a correct digit"
     else
-      return "Try again"
+      return "Incorrect! Try again"
     end
   end
 

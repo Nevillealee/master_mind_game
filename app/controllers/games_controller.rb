@@ -1,12 +1,16 @@
 class GamesController < ApplicationController
   def home
+    @best_games = Game.find_by_sql(
+      "select * from games where won = true order by difficulty DESC, attempts_remaining desc limit 2;"
+    )
+    @difficulty = {4 => "Easy", 5 => "Medium", 6 => "Hard", 7 => "Ludicrous"}
   end
 
   def index
     @current_user = User.find(session[:current_user_id])
     # TODO(Nlee): perform asynchronously
-    num_combo =  NumberGenerator.perform()
-    @game = @current_user.games.create(number_combo: num_combo)
+    num_combo =  NumberGenerator.perform(session[:difficulty])
+    @game = @current_user.games.create(number_combo: num_combo, difficulty: session[:difficulty])
     redirect_to @game
   end
 
@@ -30,6 +34,7 @@ class GamesController < ApplicationController
     @feedback = @current_game.feedbacks.create(user_guess: guess, attempt: attempt, result: @result)
 
     if @current_game.won
+      # @current_game.save
       flash[:notice] = @result
       # redirect to win screen and reveal number_combo
       redirect_to root_path
@@ -48,3 +53,12 @@ class GamesController < ApplicationController
     params.require(:game).permit(:id, :user_guess)
   end
 end
+
+# difficulty permutations(combinations where order matters)
+# x = 8 possible numbers 0..7
+# easy, y=4, med y=5, hard y=6, Ludicrous y=7
+# possible choices:
+#   8^7 = 2,097,152
+#   8^6 = 262,144
+#   8^5 = 32,768
+#   8^4 = 4,096

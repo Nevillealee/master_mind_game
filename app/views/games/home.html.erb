@@ -1,10 +1,39 @@
 <div class="jumbotron jumbotron-fluid">
   <div class="container">
-    <h1 class="display-4">Master Mind v1.0</h1>
+    <div class='col-lg-8 offset-lg-2'>
+      <h1 class="display-2 game-header">The Master Mind Game v1.0</h1>
+    </div>
   </div>
 </div>
+
 <div class='row'>
   <div class='col-md-6 offset-md-3'>
     <%= link_to 'NEW GAME', new_user_path, class: 'btn btn-danger btn-lg btn-block'  %>
   </div>
 </div>
+
+
+<% if @best_games.size > 1 %>
+<div class='col-md-4 mt-4'>
+  <h1>Leader Board</h1>
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th scope="col">Player</th>
+        <th scope="col">Difficulty</th>
+        <th scope="col">Attempts</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @best_games.each do |game| %>
+        <tr>
+          <th scope="row"><%= game.user.name %></th>
+          <td><%= @difficulty[game.difficulty] %></td>
+          <td><%= 10 - game.attempts_remaining %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+<% end %>
