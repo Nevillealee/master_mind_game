@@ -1,7 +1,7 @@
 <%= link_to 'Exit', root_path, class: "btn btn-danger", id: "exit-btn" %>
 <div class='container-fluid'>
     <div class='col-lg-4 offset-lg-4 name-form'>
-      <%= form_with model: @user, :html => {:autocomplete => "off"} do |f| %>
+      <%= form_with model: @user, :html => {:autocomplete => "off"} , id: 'user-form' do |f| %>
         <% if @user.errors.any? %>
           <h2><%= pluralize(@user.errors.count, "error") %> prohibited this Resource from being saved:</h2>
           <ul>
@@ -26,3 +26,6 @@
       <% end %>
     </div>
 </div>
+<%= audio_tag("sonic1.mp3", id: "audio_src") %>
+<%= audio_tag("click1.wav", id: "bubble_sound") %>
+<%= javascript_pack_tag 'game_audio' %>

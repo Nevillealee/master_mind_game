@@ -1,6 +1,10 @@
-.game-header {
+.master-font {
   font-family: 'Fredoka One', cursive;
+  // font-family: 'Roboto', sans-serif;
   // font-family: 'VT323', monospace;
+}
+body {
+  font-family: 'Roboto', sans-serif;
 }
 .name-form {
   top: 25%;
@@ -32,3 +36,23 @@
   padding-right: 30px;
   padding-left: 30px;
 }
+
+.table-bordered {
+  border: 2px solid #3e4042;
+}
+.table thead th {
+  border: 2px solid #2e353c;
+}
+
+.table-bordered th, .table-bordered td {
+    border: 1px solid #2e353c;
+}
+
+.form-control {
+  border: 2px solid #40454a;
+}
+
+
+// Place all the styles related to the User controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: https://sass-lang.com/

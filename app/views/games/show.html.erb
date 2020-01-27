@@ -12,7 +12,6 @@
           <% end %>
           </ul>
         <% end %>
-
         <div class='form-group'>
           <%= f.label :user_guess, "Enter a #{@current_game.number_combo.size} digit number:" %>
           <%= f.text_field :user_guess, placeholder: '123...', class: 'form-control', required: true %>
