@@ -11,11 +11,10 @@ interviewer has, and err on the side of being explicit).
 
 ### Prerequisites
 ```
--[redis](https://redis.io/download) [windows 10](https://redislabs.com/blog/redis-on-windows-10/) 
--[postgresql 11](https://www.postgresql.org/download/) 
+-redis
+-postgresql 11
 -ruby 2.5.1 
--[bundler](https://bundler.io/) 
--[rvm](https://rvm.io/) (optional)
+-bundler
 ```
 ### Installing (Based on Linux, if using windows/Mac see OS specific docs for installation details)
 
