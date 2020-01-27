@@ -16,7 +16,7 @@ interviewer has, and err on the side of being explicit).
 -ruby 2.5.1 
 -bundler
 ```
-### Installing (Based on Linux, if using windows/Mac see OS specific docs for installation details)
+### Installing (Based on Linux)
 
 Clone the repo onto your local machine
 
