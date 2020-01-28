@@ -30,11 +30,9 @@ class GamesController < ApplicationController
     guess = game_params[:user_guess]
     @result = @current_game.compare_answer(guess)
     attempt = 10 - @current_game.attempts_remaining
-    # put feedback.result (derived from game.compare_answer response) in flash
     @feedback = @current_game.feedbacks.create(user_guess: guess, attempt: attempt, result: @result)
 
     if @current_game.won
-      # @current_game.save
       flash[:notice] = @result
       # redirect to win screen and reveal number_combo
       redirect_to root_path

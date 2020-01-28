@@ -104,6 +104,8 @@ Here the call to the random number api is made(in a background job) and that res
 The user is now redirected to the Game object page we just created(show action in game controller). On this show page, a user can submit a guess that will be compared against the randomly generated number previously saved to the current Game object. A feedback object is created and the feedback from
 the user guess and random number comparison is saved with it.
 If the user guessed correctly the game ends and the user is sent back to the home page with a congratulatory message. If the user hasnt exceeded 10 guess attempts, the Game show page is refreshed with updated Game object information and a list of associated Feedback records in the form of a "Guess history table". Otherwise, the game ends and the user is redirected to the home page with a message stated they lost.
+The feedback messages to the user are displayed using a flash method made available in rails controllers through the ActionDispatch module. The feedback
+message is saved to the session has through the flash method and then when the page changes, code in the application.html.erb layout displays those flash values at the top of the screen with light css styling.
 Finally, the home screen displays a leaderboard which includes (if at least 2 games exist in the database) the top 3 users and there scores. The scores are based on Games completed in the fewest
 attempts on the highest difficulty setting.
 ```
