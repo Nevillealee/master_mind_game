@@ -1,7 +1,7 @@
 class GamesController < ApplicationController
   def home
     @best_games = Game.find_by_sql(
-      "select * from games where won = true order by difficulty DESC, attempts_remaining desc limit 2;"
+      "select * from games where won = true order by difficulty DESC, attempts_remaining desc limit 3;"
     )
     @difficulty = {4 => "Easy", 5 => "Medium", 6 => "Hard", 7 => "Ludicrous"}
   end
@@ -53,12 +53,3 @@ class GamesController < ApplicationController
     params.require(:game).permit(:id, :user_guess)
   end
 end
-
-# difficulty permutations(combinations where order matters)
-# x = 8 possible numbers 0..7
-# easy, y=4, med y=5, hard y=6, Ludicrous y=7
-# possible choices:
-#   8^7 = 2,097,152
-#   8^6 = 262,144
-#   8^5 = 32,768
-#   8^4 = 4,096
